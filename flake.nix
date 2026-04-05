@@ -8,19 +8,27 @@
     flake-utils.lib.eachDefaultSystem (system:
       let
         pkgs = nixpkgs.legacyPackages.${system};
-      in {
-        devShells.default = pkgs.mkShell {
-          packages = [
-            pkgs.neovim
-            pkgs.yazi
-            pkgs.ripgrep
-            pkgs.fd
-            pkgs.fish
-            pkgs.lsd
-            pkgs.eza
-            # pkgs.mysql
-          ];
 
+        tools = [
+          pkgs.neovim
+          pkgs.yazi
+          pkgs.ripgrep
+          pkgs.fd
+          pkgs.fish
+          pkgs.lsd
+          pkgs.eza
+          # pkgs.mysql
+        ];
+      in {
+        # `nix shell` - lightweight, just adds tools to PATH
+        packages.default = pkgs.buildEnv {
+          name = "my-env";
+          paths = tools;
+        };
+
+        # `nix develop` - kept around for when you actually need a build env
+        devShells.default = pkgs.mkShell {
+          packages = tools;
           shellHook = ''
             exec fish
           '';
