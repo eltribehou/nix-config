@@ -14,10 +14,13 @@
           pkgs.yazi
           pkgs.ripgrep
           pkgs.fd
-          pkgs.fish
+          # pkgs.fish
           pkgs.lsd
-          pkgs.eza
-          # pkgs.mysql
+          # pkgs.eza
+          # pkgs.broot
+          pkgs.dust
+          pkgs.dua
+          pkgs.xremap
         ];
       in {
         # `nix shell` - lightweight, just adds tools to PATH
